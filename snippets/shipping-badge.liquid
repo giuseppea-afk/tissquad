@@ -4,12 +4,30 @@
 {%- endcomment -%}
 
 <div class="shipping-badge">
-  <span class="shipping-badge__icon">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" aria-hidden="true" focusable="false">
-      <path d="M48 0C21.5 0 0 21.5 0 48v272c0 26.5 21.5 48 48 48h16c0 53 43 96 96 96s96-43 96-96h128c0 53 43 96 96 96s96-43 96-96h32c17.7 0 32-14.3 32-32V320 288 237.3c0-17-6.7-33.3-18.7-45.3L512 114.7c-12-12-28.3-18.7-45.3-18.7H416V48c0-26.5-21.5-48-48-48H48zM416 160h50.7L544 237.3V256H416V160zM208 416a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zm272 48a48 48 0 1 1 0-96 48 48 0 1 1 0 96z"/>
+  <span class="shipping-badge__label">Spedito da</span>
+
+  {%- comment -%} Tissquad logo {%- endcomment -%}
+  <span class="shipping-badge__logo">
+    <svg class="logo-tissquad" viewBox="0 0 215 50" xmlns="http://www.w3.org/2000/svg" aria-label="Tissquad" role="img">
+      <!-- Bird icon -->
+      <path d="M27 7C21 11 11 16 0 20c7 2 14 2 18 5-4 5-10 10-18 16 8-3 16-6 21-11l2 9c2-6 3-12 2-18l4 16c2-5 5-10 3-15 5 3 12 7 18 10-6-6-13-12-18-18 6-2 13-2 18-5C42 13 33 8 27 7z" fill="#111"/>
+      <!-- TISSQUAD text -->
+      <text x="52" y="38" font-family="'Arial Black','Arial',sans-serif" font-size="25" font-weight="900" fill="#111" letter-spacing="1">TISSQUAD</text>
     </svg>
   </span>
-  <span class="shipping-badge__text">
-    Spedito da <strong>Tissquad</strong> <span class="shipping-badge__separator">×</span> <strong class="shipping-badge__amazon">Amazon Shipping</strong>
+
+  <span class="shipping-badge__separator">×</span>
+
+  {%- comment -%} Amazon Shipping logo {%- endcomment -%}
+  <span class="shipping-badge__logo">
+    <svg class="logo-amazon-shipping" viewBox="0 0 380 72" xmlns="http://www.w3.org/2000/svg" aria-label="Amazon Shipping" role="img">
+      <!-- amazon text -->
+      <text x="2" y="50" font-family="'Arial Rounded MT Bold','Arial',sans-serif" font-size="46" font-weight="900" fill="#232F3E">amazon</text>
+      <!-- smile arrow -->
+      <path d="M6 61 Q75 80 144 61" stroke="#00A8E1" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <path d="M134 55 L148 62 L132 67 Z" fill="#00A8E1"/>
+      <!-- shipping text -->
+      <text x="162" y="50" font-family="'Arial Rounded MT Bold','Arial',sans-serif" font-size="46" font-weight="900" fill="#232F3E">shipping</text>
+    </svg>
   </span>
 </div>
