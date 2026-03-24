@@ -6,121 +6,115 @@
   <title>Anteprima Badge — Tissquad x Amazon Shipping</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #f0f0f0;
+      background: #1a1a1a;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
       padding: 24px;
     }
-
     .product-card {
       background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
-      padding: 32px;
+      border-radius: 16px;
+      padding: 24px;
       width: 100%;
-      max-width: 420px;
+      max-width: 380px;
     }
-
-    .product-title {
-      font-size: 20px;
-      font-weight: 700;
-      color: #111;
-      margin-bottom: 8px;
-    }
-
-    .product-price {
-      font-size: 22px;
-      color: #222;
-      font-weight: 600;
-      margin-bottom: 20px;
-    }
-
     .btn-add-to-cart {
-      display: block;
-      width: 100%;
-      padding: 14px;
-      background: #111;
-      color: #fff;
-      font-size: 15px;
-      font-weight: 600;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      text-align: center;
-      letter-spacing: 0.5px;
-    }
-
-    .shipping-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 16px;
-      margin-top: 12px;
-      background-color: #fff;
-      border: 1px solid #e8e8e8;
-      border-radius: 6px;
-      width: 100%;
-      box-sizing: border-box;
-      justify-content: center;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-    }
-
-    .shipping-badge__label {
-      font-size: 11px;
-      color: #999;
-      white-space: nowrap;
-      letter-spacing: 0.3px;
-    }
-
-    .shipping-badge__logo {
       display: flex;
       align-items: center;
-      flex-shrink: 0;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 14px;
+      background: #F5C842;
+      color: #111;
+      font-size: 16px;
+      font-weight: 700;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
     }
-
-    .logo-tissquad { height: 22px; width: auto; }
-    .logo-amazon-shipping { height: 20px; width: auto; }
-
-    .shipping-badge__separator {
-      font-size: 12px;
-      color: #ccc;
-      font-weight: 300;
+    /* badge */
+    .shipping-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 16px;
+      margin-top: 12px;
+      background: #fff;
+      border: 1px solid #e8e8e8;
+      border-radius: 12px;
+      width: 100%;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
     }
+    .shipping-badge__row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .shipping-badge__row--delivery {
+      font-size: 14px;
+      color: #111;
+    }
+    .shipping-badge__clock {
+      width: 14px; height: 14px; fill: #111; flex-shrink: 0;
+    }
+    .shipping-badge__delivery-text strong { font-weight: 800; }
+    .shipping-badge__row--carrier { gap: 7px; }
+    .shipping-badge__carrier-label {
+      font-size: 11px; color: #999; white-space: nowrap; letter-spacing: 0.2px;
+    }
+    .shipping-badge__logo { display: flex; align-items: center; flex-shrink: 0; }
+    .logo-tissquad { height: 18px; width: auto; }
+    .logo-amazon-shipping { height: 16px; width: auto; }
+    .shipping-badge__separator { font-size: 11px; color: #ccc; font-weight: 300; }
   </style>
 </head>
 <body>
   <div class="product-card">
-    <div class="product-title">Nome Prodotto</div>
-    <div class="product-price">€ 29,90</div>
 
-    <button class="btn-add-to-cart">Aggiungi al Carrello</button>
+    <button class="btn-add-to-cart">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 576 512">
+        <path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/>
+      </svg>
+      Aggiungi al Carrello
+    </button>
 
-    <!-- BADGE -->
     <div class="shipping-badge">
-      <span class="shipping-badge__label">Spedito da</span>
 
-      <span class="shipping-badge__logo">
-        <svg class="logo-tissquad" viewBox="0 0 215 50" xmlns="http://www.w3.org/2000/svg" aria-label="Tissquad">
-          <path d="M27 7C21 11 11 16 0 20c7 2 14 2 18 5-4 5-10 10-18 16 8-3 16-6 21-11l2 9c2-6 3-12 2-18l4 16c2-5 5-10 3-15 5 3 12 7 18 10-6-6-13-12-18-18 6-2 13-2 18-5C42 13 33 8 27 7z" fill="#111"/>
-          <text x="52" y="38" font-family="'Arial Black','Arial',sans-serif" font-size="25" font-weight="900" fill="#111" letter-spacing="1">TISSQUAD</text>
+      <!-- Row 1 -->
+      <div class="shipping-badge__row shipping-badge__row--delivery">
+        <svg class="shipping-badge__clock" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <path d="M256 0a256 256 0 1 1 0 512A256 256 0 1 1 256 0zM232 120l0 136c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.5 33.3-6.5s4.5-25.9-6.5-33.3L280 243.2 280 120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"/>
         </svg>
-      </span>
+        <span class="shipping-badge__delivery-text">Consegna in <strong>24 ore</strong></span>
+      </div>
 
-      <span class="shipping-badge__separator">×</span>
+      <!-- Row 2 -->
+      <div class="shipping-badge__row shipping-badge__row--carrier">
+        <span class="shipping-badge__carrier-label">Spedito da</span>
+        <span class="shipping-badge__logo">
+          <svg class="logo-tissquad" viewBox="0 0 215 50" xmlns="http://www.w3.org/2000/svg" aria-label="Tissquad">
+            <path d="M27 7C21 11 11 16 0 20c7 2 14 2 18 5-4 5-10 10-18 16 8-3 16-6 21-11l2 9c2-6 3-12 2-18l4 16c2-5 5-10 3-15 5 3 12 7 18 10-6-6-13-12-18-18 6-2 13-2 18-5C42 13 33 8 27 7z" fill="#111"/>
+            <text x="52" y="38" font-family="'Arial Black','Arial',sans-serif" font-size="25" font-weight="900" fill="#111" letter-spacing="1">TISSQUAD</text>
+          </svg>
+        </span>
+        <span class="shipping-badge__separator">&#215;</span>
+        <span class="shipping-badge__logo">
+          <svg class="logo-amazon-shipping" viewBox="0 0 420 72" xmlns="http://www.w3.org/2000/svg" aria-label="Amazon Shipping">
+            <text x="2" y="50" font-family="'Arial Rounded MT Bold','Arial',sans-serif" font-size="46" font-weight="900" fill="#232F3E">amazon</text>
+            <path d="M6 61 Q67 80 128 61" stroke="#00A8E1" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <path d="M118 55 L132 62 L116 67 Z" fill="#00A8E1"/>
+            <text x="148" y="50" font-family="'Arial Rounded MT Bold','Arial',sans-serif" font-size="46" font-weight="900" fill="#232F3E">shipping</text>
+          </svg>
+        </span>
+      </div>
 
-      <span class="shipping-badge__logo">
-        <svg class="logo-amazon-shipping" viewBox="0 0 420 72" xmlns="http://www.w3.org/2000/svg" aria-label="Amazon Shipping">
-          <text x="2" y="50" font-family="'Arial Rounded MT Bold','Arial',sans-serif" font-size="46" font-weight="900" fill="#232F3E">amazon</text>
-          <path d="M6 61 Q67 80 128 61" stroke="#00A8E1" stroke-width="5" fill="none" stroke-linecap="round"/>
-          <path d="M118 55 L132 62 L116 67 Z" fill="#00A8E1"/>
-          <text x="148" y="50" font-family="'Arial Rounded MT Bold','Arial',sans-serif" font-size="46" font-weight="900" fill="#232F3E">shipping</text>
-        </svg>
-      </span>
     </div>
   </div>
 </body>
