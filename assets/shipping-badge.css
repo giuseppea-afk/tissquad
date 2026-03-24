@@ -1,0 +1,58 @@
+/* ============================================================
+   Shipping Badge — Tissquad x Amazon Shipping
+   Include via: {{ 'shipping-badge.css' | asset_url | stylesheet_tag }}
+   ============================================================ */
+
+.shipping-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  margin-top: 12px;
+  background-color: #fff8f0;
+  border: 1px solid #f0a500;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #333;
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: center;
+}
+
+.shipping-badge__icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.shipping-badge__icon svg {
+  width: 18px;
+  height: 18px;
+  fill: #f0a500;
+}
+
+.shipping-badge__text {
+  line-height: 1.3;
+}
+
+.shipping-badge__separator {
+  margin: 0 2px;
+  color: #888;
+  font-weight: 400;
+}
+
+.shipping-badge__amazon {
+  color: #e47911;
+}
+
+@media (max-width: 480px) {
+  .shipping-badge {
+    font-size: 12px;
+    padding: 7px 10px;
+  }
+
+  .shipping-badge__icon svg {
+    width: 16px;
+    height: 16px;
+  }
+}
