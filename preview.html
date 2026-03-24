@@ -26,9 +26,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 10px;
       width: 100%;
-      padding: 14px;
+      padding: 15px;
       background: #F5C842;
       color: #111;
       font-size: 16px;
@@ -37,13 +37,13 @@
       border-radius: 50px;
       cursor: pointer;
     }
+    .btn-add-to-cart svg { width: 20px; height: 20px; fill: #111; }
     /* badge */
     .shipping-badge {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 6px;
-      padding: 12px 16px;
+      padding: 14px 16px;
       margin-top: 12px;
       background: #fff;
       border: 1px solid #e8e8e8;
@@ -55,47 +55,44 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 7px;
+      width: 100%;
     }
     .shipping-badge__row--delivery {
-      font-size: 14px;
+      font-size: 15px;
       color: #111;
+      padding-bottom: 10px;
     }
-    .shipping-badge__clock {
-      width: 14px; height: 14px; fill: #111; flex-shrink: 0;
-    }
+    .shipping-badge__icon { width: 13px; height: 13px; fill: #111; flex-shrink: 0; }
     .shipping-badge__delivery-text strong { font-weight: 800; }
-    .shipping-badge__row--carrier { gap: 7px; }
-    .shipping-badge__carrier-label {
-      font-size: 11px; color: #999; white-space: nowrap; letter-spacing: 0.2px;
-    }
+    .shipping-badge__divider { width: 100%; height: 1px; background: #f0f0f0; margin-bottom: 10px; }
+    .shipping-badge__row--carrier { gap: 8px; }
+    .shipping-badge__carrier-label { font-size: 11px; color: #999; white-space: nowrap; }
     .shipping-badge__logo { display: flex; align-items: center; flex-shrink: 0; }
-    .logo-tissquad { height: 18px; width: auto; }
-    .logo-amazon-shipping { height: 16px; width: auto; }
+    .logo-tissquad { height: 19px; width: auto; }
+    .logo-amazon-shipping { height: 17px; width: auto; }
     .shipping-badge__separator { font-size: 11px; color: #ccc; font-weight: 300; }
   </style>
 </head>
 <body>
   <div class="product-card">
-
     <button class="btn-add-to-cart">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 576 512">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
         <path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/>
       </svg>
       Aggiungi al Carrello
     </button>
 
     <div class="shipping-badge">
-
-      <!-- Row 1 -->
       <div class="shipping-badge__row shipping-badge__row--delivery">
-        <svg class="shipping-badge__clock" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-          <path d="M256 0a256 256 0 1 1 0 512A256 256 0 1 1 256 0zM232 120l0 136c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.5 33.3-6.5s4.5-25.9-6.5-33.3L280 243.2 280 120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"/>
+        <svg class="shipping-badge__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+          <path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80v352c0 17.4 9.4 33.4 24.5 41.9S58.2 482 73 473l288-176c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/>
         </svg>
-        <span class="shipping-badge__delivery-text">Consegna in <strong>24 ore</strong></span>
+        <span class="shipping-badge__delivery-text"><strong>Ricevi Domani</strong></span>
       </div>
 
-      <!-- Row 2 -->
+      <div class="shipping-badge__divider"></div>
+
       <div class="shipping-badge__row shipping-badge__row--carrier">
         <span class="shipping-badge__carrier-label">Spedito da</span>
         <span class="shipping-badge__logo">
@@ -106,15 +103,14 @@
         </span>
         <span class="shipping-badge__separator">&#215;</span>
         <span class="shipping-badge__logo">
-          <svg class="logo-amazon-shipping" viewBox="0 0 420 72" xmlns="http://www.w3.org/2000/svg" aria-label="Amazon Shipping">
+          <svg class="logo-amazon-shipping" viewBox="0 0 460 72" xmlns="http://www.w3.org/2000/svg" aria-label="Amazon Shipping">
             <text x="2" y="50" font-family="'Arial Rounded MT Bold','Arial',sans-serif" font-size="46" font-weight="900" fill="#232F3E">amazon</text>
-            <path d="M6 61 Q67 80 128 61" stroke="#00A8E1" stroke-width="5" fill="none" stroke-linecap="round"/>
-            <path d="M118 55 L132 62 L116 67 Z" fill="#00A8E1"/>
-            <text x="148" y="50" font-family="'Arial Rounded MT Bold','Arial',sans-serif" font-size="46" font-weight="900" fill="#232F3E">shipping</text>
+            <path d="M6 62 Q75 82 148 62" stroke="#00A8E1" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <path d="M138 56 L152 63 L136 68 Z" fill="#00A8E1"/>
+            <text x="172" y="50" font-family="'Arial Rounded MT Bold','Arial',sans-serif" font-size="46" font-weight="900" fill="#232F3E">shipping</text>
           </svg>
         </span>
       </div>
-
     </div>
   </div>
 </body>
