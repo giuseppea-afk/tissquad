@@ -1,1 +1,4 @@
-node_modules/\ndata.db\n*.db-shm\n*.db-wal
+node_modules/
+data.db
+*.db-shm
+*.db-wal
