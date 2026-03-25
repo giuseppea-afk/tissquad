@@ -1,0 +1,43 @@
+{%- comment -%}
+  Shipping badge — display under the Add to Cart button on the product page.
+  Usage: {% render 'shipping-badge' %}
+{%- endcomment -%}
+
+<div class="shipping-badge">
+
+  <!-- Row 1: delivery -->
+  <div class="shipping-badge__row shipping-badge__row--delivery">
+    <svg class="shipping-badge__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" aria-hidden="true">
+      <path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80v352c0 17.4 9.4 33.4 24.5 41.9S58.2 482 73 473l288-176c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/>
+    </svg>
+    <span class="shipping-badge__delivery-text"><strong>Ricevi Domani</strong></span>
+  </div>
+
+  <div class="shipping-badge__divider"></div>
+
+  <!-- Row 2: carrier logos -->
+  <div class="shipping-badge__row shipping-badge__row--carrier">
+    <span class="shipping-badge__carrier-label">Spedito da</span>
+
+    <!-- Tissquad logo -->
+    <span class="shipping-badge__logo">
+      <svg class="logo-tissquad" viewBox="0 0 215 50" xmlns="http://www.w3.org/2000/svg" aria-label="Tissquad" role="img">
+        <path d="M27 7C21 11 11 16 0 20c7 2 14 2 18 5-4 5-10 10-18 16 8-3 16-6 21-11l2 9c2-6 3-12 2-18l4 16c2-5 5-10 3-15 5 3 12 7 18 10-6-6-13-12-18-18 6-2 13-2 18-5C42 13 33 8 27 7z" fill="#111"/>
+        <text x="52" y="38" font-family="'Arial Black','Arial',sans-serif" font-size="25" font-weight="900" fill="#111" letter-spacing="1">TISSQUAD</text>
+      </svg>
+    </span>
+
+    <span class="shipping-badge__separator">&#215;</span>
+
+    <!-- Amazon Shipping logo -->
+    <span class="shipping-badge__logo">
+      <svg class="logo-amazon-shipping" viewBox="0 0 460 72" xmlns="http://www.w3.org/2000/svg" aria-label="Amazon Shipping" role="img">
+        <text x="2" y="50" font-family="'Arial Rounded MT Bold','Arial',sans-serif" font-size="46" font-weight="900" fill="#232F3E">amazon</text>
+        <path d="M6 62 Q75 82 148 62" stroke="#00A8E1" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <path d="M138 56 L152 63 L136 68 Z" fill="#00A8E1"/>
+        <text x="172" y="50" font-family="'Arial Rounded MT Bold','Arial',sans-serif" font-size="46" font-weight="900" fill="#232F3E">shipping</text>
+      </svg>
+    </span>
+  </div>
+
+</div>
