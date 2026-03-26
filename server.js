@@ -40,6 +40,10 @@ app.get('/api/stats', (req, res) => {
   });
 });
 
+app.get('/logistics', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'logistics.html'));
+});
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
