@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const { initDB, getDB } = require('./database');
 
 const app = express();
 app.use(express.json());
@@ -10,12 +11,9 @@ app.use('/api/prodotti', require('./routes/prodotti'));
 app.use('/api/preventivi', require('./routes/preventivi'));
 app.use('/api/impostazioni', require('./routes/impostazioni'));
 
-// Dashboard stats
-const db = require('./database');
 app.get('/api/stats', (req, res) => {
-  const totali = db.prepare(`
-    SELECT stato, COUNT(*) as count FROM preventivi GROUP BY stato
-  `).all();
+  const db = getDB();
+  const totali = db.prepare('SELECT stato, COUNT(*) as count FROM preventivi GROUP BY stato').all();
   const statsMap = Object.fromEntries(totali.map(r => [r.stato, r.count]));
 
   const totaleAccettati = db.prepare(`
@@ -42,10 +40,15 @@ app.get('/api/stats', (req, res) => {
   });
 });
 
-// SPA fallback
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Tissquad avviato su http://localhost:${PORT}`));
+
+initDB().then(() => {
+  app.listen(PORT, () => console.log(`Tissquad avviato su http://localhost:${PORT}`));
+}).catch(err => {
+  console.error('Errore avvio database:', err);
+  process.exit(1);
+});

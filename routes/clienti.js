@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../database');
+const { getDB } = require('../database');
+const db = { prepare: (...a) => getDB().prepare(...a) };
 
 router.get('/', (req, res) => {
   const { q } = req.query;
