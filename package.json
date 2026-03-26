@@ -1,0 +1,15 @@
+{
+  "name": "tissquad",
+  "version": "1.0.0",
+  "description": "Gestionale per la generazione di preventivi",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^9.4.3",
+    "express": "^4.18.2",
+    "pdfkit": "^0.15.0"
+  }
+}
