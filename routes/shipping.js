@@ -7,28 +7,27 @@ const path = require('path');
 const BG_IMAGE  = path.join(__dirname, '../public/images/port-bg.jpg');
 const FONT_BOLD = path.join(__dirname, '../public/fonts/Anton-Regular.ttf');
 
-// Disegna il logo uccello Tissquad con PDFKit path API
-// cx,cy = centro, size = larghezza bounding box
-function drawBirdLogo(doc, cx, cy, size, color, opacity) {
+// Disegna il logo uccello Tissquad - coordinate calcolate direttamente (no translate)
+// ox,oy = angolo in alto a sinistra del bounding box, size = larghezza
+function drawBirdLogo(doc, ox, oy, size, color, opacity) {
   const s = size / 100;
-  const tx = cx - size * 0.5;
-  const ty = cy - size * 0.5;
-  const p = (x, y) => `${+(x*s).toFixed(2)},${+(y*s).toFixed(2)}`;
+  // converte coordinate normalizzate (0-100) in coordinate PDF assolute
+  const p = (x, y) => `${+(ox + x*s).toFixed(2)},${+(oy + y*s).toFixed(2)}`;
+  const n = (x, y) => [+(ox + x*s).toFixed(2), +(oy + y*s).toFixed(2)];
 
   doc.save();
   doc.opacity(opacity || 0.22);
-  doc.translate(tx, ty);
 
-  // Ali superiori
+  // Ali superiori (forma a V)
   doc.path(`M ${p(6,40)} L ${p(40,57)} L ${p(80,7)} L ${p(71,7)} L ${p(44,41)} L ${p(20,7)} L ${p(11,7)} Z`).fill(color);
 
   // Corpo con becco
   doc.path(`M ${p(40,58)} C ${p(34,63)} ${p(22,70)} ${p(14,76)} C ${p(8,80)} ${p(7,88)} ${p(14,85)} C ${p(22,81)} ${p(36,74)} ${p(48,67)} L ${p(88,57)} L ${p(82,65)} C ${p(74,72)} ${p(62,72)} ${p(50,65)} C ${p(44,62)} ${p(41,60)} ${p(40,58)} Z`).fill(color);
 
   // Puntini coda
-  doc.circle(+(82*s).toFixed(2), +(68*s).toFixed(2), +(2.5*s).toFixed(2)).fill(color);
-  doc.circle(+(86*s).toFixed(2), +(73*s).toFixed(2), +(2*s).toFixed(2)).fill(color);
-  doc.circle(+(78*s).toFixed(2), +(73*s).toFixed(2), +(2*s).toFixed(2)).fill(color);
+  const [cx1, cy1] = n(82, 68); doc.circle(cx1, cy1, +(2.5*s).toFixed(2)).fill(color);
+  const [cx2, cy2] = n(86, 73); doc.circle(cx2, cy2, +(2*s).toFixed(2)).fill(color);
+  const [cx3, cy3] = n(78, 73); doc.circle(cx3, cy3, +(2*s).toFixed(2)).fill(color);
 
   doc.restore();
 }
@@ -72,15 +71,11 @@ router.post('/pdf', (req, res) => {
   doc.rect(0, 0, 430, H).fill('#0a0f1c');
   doc.restore();
 
-  // 5. Logo uccello grande – sfondo sinistro (decorativo)
-  drawBirdLogo(doc, 160, 320, 480, '#c9a227', 0.18);
+  // 5. Logo uccello grande – sfondo sinistro (decorativo), ox,oy = top-left
+  drawBirdLogo(doc, -80, 160, 480, '#c9a227', 0.18);
 
-  // 6. Logo uccello grande – sfondo destro (decorativo, specchiato)
-  doc.save();
-  doc.translate(W, 0);
-  doc.scale(-1, 1);
-  drawBirdLogo(doc, 160, 280, 420, '#c9a227', 0.12);
-  doc.restore();
+  // 6. Logo uccello grande – sfondo destro (decorativo)
+  drawBirdLogo(doc, W - 320, 80, 420, '#c9a227', 0.12);
 
   // 7. Barra verticale oro
   doc.rect(52, 160, 7, 225).fill('#c9a227');
@@ -117,8 +112,8 @@ router.post('/pdf', (req, res) => {
     doc.text(label, bX, bY + 15, { width: bW, align: 'center', lineBreak: false });
   });
 
-  // 12. Logo piccolo in alto a destra
-  drawBirdLogo(doc, W - 80, 55, 100, '#c9a227', 0.75);
+  // 12. Logo piccolo in alto a destra (ox = W-120, oy = 10, size=100)
+  drawBirdLogo(doc, W - 120, 10, 100, '#c9a227', 0.75);
 
   // 13. Data
   doc.font('Helvetica').fontSize(11).fillColor('#c9a227').opacity(0.7);
@@ -136,8 +131,8 @@ router.post('/pdf', (req, res) => {
     doc.rect(0, 0, W, 75).fill('#0c1220');
     doc.rect(0, 75, W, 5).fill('#c9a227');
 
-    // Logo piccolo header
-    drawBirdLogo(doc, W - 50, 37, 65, '#c9a227', 0.9);
+    // Logo piccolo header (ox = W-80, oy = 5, size=65)
+    drawBirdLogo(doc, W - 80, 5, 65, '#c9a227', 0.9);
 
     doc.font(HEAVY).fontSize(20).fillColor('#ffffff').opacity(1);
     doc.text('TISSQUAD SHIPPING RATES 2025', 30, 18, { lineBreak: false, characterSpacing: 1 });
