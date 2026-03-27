@@ -1,30 +1,45 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <!-- Tissquad bird logo - swift/swallow in flight -->
-  <!-- Upper wings crossing (V shape) -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+  <!-- Ala sinistra (grande triangolo che va da sinistra in alto verso il centro) -->
   <path fill="currentColor" d="
-    M 6,40
-    L 40,57
-    L 80,7
-    L 71,7
-    L 44,41
-    L 20,7
-    L 11,7
+    M 15,140
+    L 170,15
+    L 215,15
+    L 275,200
+    L 200,145
+    L 65,95
     Z
   "/>
-  <!-- Body with head curl and beak -->
+
+  <!-- Ala destra (lama sottile che va verso l'alto destra) -->
   <path fill="currentColor" d="
-    M 40,58
-    C 34,63 22,70 14,76
-    C 8,80 7,88 14,85
-    C 22,81 36,74 48,67
-    L 88,57
-    L 82,65
-    C 74,72 62,72 50,65
-    C 44,62 41,60 40,58
+    M 268,192
+    L 440,15
+    L 480,45
+    L 318,238
     Z
   "/>
-  <!-- Tail feather dots near beak -->
-  <circle cx="82" cy="68" r="2.5"/>
-  <circle cx="86" cy="73" r="2"/>
-  <circle cx="78" cy="73" r="2"/>
+
+  <!-- Corpo / loop testa (curva che scende a sinistra e forma l'anello della testa) -->
+  <path fill="currentColor" d="
+    M 270,215
+    C 255,265 220,315 170,360
+    C 130,395 65,400 38,355
+    C 15,315 35,268 80,255
+    C 120,243 170,235 220,218
+    Z
+  "/>
+
+  <!-- Becco (punta verso destra) -->
+  <path fill="currentColor" d="
+    M 282,220
+    L 465,210
+    C 490,240 475,285 445,292
+    L 295,268
+    Z
+  "/>
+
+  <!-- Tre puntini vicino al becco -->
+  <circle fill="currentColor" cx="445" cy="306" r="14"/>
+  <circle fill="currentColor" cx="468" cy="332" r="11"/>
+  <circle fill="currentColor" cx="420" cy="334" r="11"/>
 </svg>
