@@ -13,40 +13,22 @@ function drawBirdLogo(doc, cx, cy, size, color, opacity) {
   const s = size / 100;
   const tx = cx - size * 0.5;
   const ty = cy - size * 0.5;
+  const p = (x, y) => `${+(x*s).toFixed(2)},${+(y*s).toFixed(2)}`;
 
   doc.save();
   doc.opacity(opacity || 0.22);
   doc.translate(tx, ty);
 
-  // Ali superiori (forma a V che si incrociano)
-  doc.path(`
-    M ${6*s},${40*s}
-    L ${40*s},${57*s}
-    L ${80*s},${7*s}
-    L ${71*s},${7*s}
-    L ${44*s},${41*s}
-    L ${20*s},${7*s}
-    L ${11*s},${7*s}
-    Z
-  `).fill(color);
+  // Ali superiori
+  doc.path(`M ${p(6,40)} L ${p(40,57)} L ${p(80,7)} L ${p(71,7)} L ${p(44,41)} L ${p(20,7)} L ${p(11,7)} Z`).fill(color);
 
-  // Corpo con testa arrotondata e becco
-  doc.path(`
-    M ${40*s},${58*s}
-    C ${34*s},${63*s} ${22*s},${70*s} ${14*s},${76*s}
-    C ${8*s},${80*s} ${7*s},${88*s} ${14*s},${85*s}
-    C ${22*s},${81*s} ${36*s},${74*s} ${48*s},${67*s}
-    L ${88*s},${57*s}
-    L ${82*s},${65*s}
-    C ${74*s},${72*s} ${62*s},${72*s} ${50*s},${65*s}
-    C ${44*s},${62*s} ${41*s},${60*s} ${40*s},${58*s}
-    Z
-  `).fill(color);
+  // Corpo con becco
+  doc.path(`M ${p(40,58)} C ${p(34,63)} ${p(22,70)} ${p(14,76)} C ${p(8,80)} ${p(7,88)} ${p(14,85)} C ${p(22,81)} ${p(36,74)} ${p(48,67)} L ${p(88,57)} L ${p(82,65)} C ${p(74,72)} ${p(62,72)} ${p(50,65)} C ${p(44,62)} ${p(41,60)} ${p(40,58)} Z`).fill(color);
 
   // Puntini coda
-  doc.circle(82*s, 68*s, 2.5*s).fill(color);
-  doc.circle(86*s, 73*s, 2*s).fill(color);
-  doc.circle(78*s, 73*s, 2*s).fill(color);
+  doc.circle(+(82*s).toFixed(2), +(68*s).toFixed(2), +(2.5*s).toFixed(2)).fill(color);
+  doc.circle(+(86*s).toFixed(2), +(73*s).toFixed(2), +(2*s).toFixed(2)).fill(color);
+  doc.circle(+(78*s).toFixed(2), +(73*s).toFixed(2), +(2*s).toFixed(2)).fill(color);
 
   doc.restore();
 }
