@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tissquad – Shipping Rates Generator</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #0d1526;
+      --gold: #c9a227;
+      --gold-light: #f0d060;
+      --bg: #f0f2f5;
+      --card: #fff;
+      --border: #e0e4ea;
+      --text: #1a2332;
+      --muted: #6b7a90;
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+    /* HERO HEADER */
+    .hero {
+      background: var(--navy);
+      padding: 32px 40px 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; left: -40px;
+      width: 6px; height: 260px;
+      background: var(--gold);
+      transform: rotate(-35deg);
+      opacity: .6;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: -60px; right: 80px;
+      width: 6px; height: 260px;
+      background: var(--gold);
+      transform: rotate(-35deg);
+      opacity: .4;
+    }
+    .hero-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+    .hero h1 { font-size: 28px; font-weight: 900; color: #fff; letter-spacing: 1px; }
+    .hero h1 span { color: var(--gold); }
+    .hero p { color: var(--gold); font-size: 14px; margin-top: 6px; opacity: .9; }
+
+    /* MAIN */
+    main { max-width: 900px; margin: 32px auto; padding: 0 20px 60px; }
+
+    /* CARD */
+    .card { background: var(--card); border-radius: 14px; border: 1px solid var(--border); padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+    .card h2 { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+    .card h2::before { content: ''; display: block; width: 4px; height: 18px; background: var(--gold); border-radius: 2px; }
+
+    /* FORM */
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
+    .form-group input, .form-group select {
+      width: 100%; padding: 10px 12px; border: 1.5px solid var(--border); border-radius: 8px;
+      font-size: 14px; font-family: inherit; outline: none; transition: border .15s;
+    }
+    .form-group input:focus, .form-group select:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,162,39,.12); }
+
+    /* CORRIERI */
+    .corriere-block {
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 14px;
+      position: relative;
+    }
+    .corriere-block .corriere-title {
+      font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 12px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .corriere-block .btn-remove {
+      background: #fce8e6; border: none; color: #ea4335; cursor: pointer;
+      font-size: 12px; padding: 4px 10px; border-radius: 6px; font-weight: 600;
+    }
+
+    /* TABELLA TARIFFE */
+    .tariffe-table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 13px; }
+    .tariffe-table th {
+      background: var(--navy); color: var(--gold); font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .4px; padding: 8px 10px; text-align: left;
+    }
+    .tariffe-table td { padding: 6px 4px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .tariffe-table td input {
+      width: 100%; padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px;
+      font-size: 13px; font-family: inherit; outline: none;
+    }
+    .tariffe-table td input:focus { border-color: var(--gold); }
+    .tariffe-table tr:last-child td { border-bottom: none; }
+    .btn-del-row { background: none; border: none; cursor: pointer; color: #ea4335; font-size: 16px; padding: 2px 6px; border-radius: 4px; }
+    .btn-del-row:hover { background: #fce8e6; }
+
+    /* BUTTONS */
+    .btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; font-size: 14px; font-weight: 600; transition: all .15s; font-family: inherit; }
+    .btn-gold { background: var(--gold); color: #fff; }
+    .btn-gold:hover { background: #b08820; }
+    .btn-navy { background: var(--navy); color: #fff; }
+    .btn-navy:hover { background: #1e3050; }
+    .btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--text); }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-sm { padding: 6px 12px; font-size: 12px; }
+
+    .actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+
+    /* PREVIEW COVER */
+    .cover-preview {
+      background: var(--navy);
+      border-radius: 12px;
+      padding: 40px 40px 30px;
+      position: relative;
+      overflow: hidden;
+      min-height: 220px;
+    }
+    .cover-preview .stripe { position: absolute; background: var(--gold); opacity: .5; transform: rotate(-35deg); }
+    .cover-preview .vbar { position: absolute; left: 32px; top: 30px; width: 5px; height: 130px; background: var(--gold); border-radius: 2px; }
+    .cover-preview .title { font-size: 32px; font-weight: 900; color: #fff; line-height: 1.15; margin-left: 22px; }
+    .cover-preview .subtitle { font-size: 15px; color: var(--gold); margin-left: 22px; margin-top: 10px; }
+    .cover-preview .badges { display: flex; gap: 12px; margin-top: 24px; margin-left: 22px; flex-wrap: wrap; }
+    .cover-preview .badge {
+      background: rgba(13,21,38,.85);
+      border: 1.5px solid var(--gold);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 9px 20px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+
+    /* TOAST */
+    #toast { position: fixed; bottom: 24px; right: 24px; background: #1e2a3a; color: #fff; padding: 12px 20px; border-radius: 10px; font-size: 14px; display: none; z-index: 999; }
+    #toast.show { display: block; animation: fadeIn .2s; }
+    #toast.error { background: #ea4335; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <h1>TISSQUAD <span>SHIPPING RATES</span> GENERATOR</h1>
+    <p>Genera preventivi tariffe spedizioni personalizzati in PDF</p>
+  </div>
+</div>
+
+<main>
+
+  <!-- DATI CLIENTE -->
+  <div class="card">
+    <h2>Dati cliente</h2>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Nome cliente *</label>
+        <input type="text" id="cliente" placeholder="es. Eric Gautier" oninput="updatePreview()">
+      </div>
+      <div class="form-group">
+        <label>Data documento</label>
+        <input type="date" id="data-doc">
+      </div>
+    </div>
+  </div>
+
+  <!-- ANTEPRIMA COVER -->
+  <div class="card">
+    <h2>Anteprima copertina</h2>
+    <div class="cover-preview" id="cover-preview">
+      <div class="stripe" style="width:6px;height:300px;top:-80px;left:10px"></div>
+      <div class="stripe" style="width:6px;height:300px;top:-80px;left:30px;opacity:.3"></div>
+      <div class="stripe" style="width:6px;height:300px;top:-80px;right:80px"></div>
+      <div class="vbar"></div>
+      <div class="title">TISSQUAD<br>SHIPPING RATES 2025</div>
+      <div class="subtitle" id="preview-subtitle">Tariffe esclusive per —</div>
+      <div class="badges" id="preview-badges">
+        <div class="badge" id="badge-corrieri">0 CORRIERI</div>
+        <div class="badge">TARIFFE ESCLUSIVE</div>
+        <div class="badge" id="badge-cliente">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CORRIERI E TARIFFE -->
+  <div class="card">
+    <h2>Corrieri e tariffe</h2>
+    <div id="corrieri-list"></div>
+    <button class="btn btn-outline btn-sm" onclick="addCorriere()">+ Aggiungi corriere</button>
+  </div>
+
+  <!-- GENERA -->
+  <div class="card">
+    <h2>Genera PDF</h2>
+    <div class="actions">
+      <button class="btn btn-gold" onclick="generaPDF()">⬇ Scarica PDF</button>
+      <button class="btn btn-navy" onclick="anteprimaPDF()">👁 Anteprima nel browser</button>
+    </div>
+  </div>
+
+</main>
+
+<div id="toast"></div>
+
+<script>
+  // Imposta data odierna
+  document.getElementById('data-doc').value = new Date().toISOString().split('T')[0];
+
+  let corrieri = [];
+  let corriereIdx = 0;
+
+  function updatePreview() {
+    const nome = document.getElementById('cliente').value || '—';
+    document.getElementById('preview-subtitle').textContent = `Tariffe esclusive per ${nome}`;
+    document.getElementById('badge-cliente').textContent = nome.toUpperCase();
+    document.getElementById('badge-corrieri').textContent = `${corrieri.length} CORRIERI`;
+  }
+
+  function addCorriere(data = {}) {
+    const idx = corriereIdx++;
+    const id = `c${idx}`;
+    corrieri.push({ id, nome: data.nome || '', tariffe: data.tariffe || [] });
+
+    const container = document.getElementById('corrieri-list');
+    const div = document.createElement('div');
+    div.className = 'corriere-block';
+    div.id = `block-${id}`;
+    div.innerHTML = `
+      <div class="corriere-title">
+        <input type="text" placeholder="Nome corriere (es. DHL, FedEx...)"
+               value="${data.nome || ''}"
+               style="border:none;font-size:14px;font-weight:700;color:#0d1526;outline:none;flex:1;background:transparent"
+               oninput="updateCorriereNome('${id}', this.value)">
+        <button class="btn-remove" onclick="removeCorriere('${id}')">Rimuovi</button>
+      </div>
+      <table class="tariffe-table" id="table-${id}">
+        <thead>
+          <tr>
+            <th>Servizio / Zona</th>
+            <th>Da (kg)</th>
+            <th>A (kg)</th>
+            <th>Prezzo (€)</th>
+            <th>Note</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tbody-${id}"></tbody>
+      </table>
+      <div style="margin-top:10px;display:flex;gap:8px">
+        <button class="btn btn-outline btn-sm" onclick="addRiga('${id}')">+ Riga</button>
+        <button class="btn btn-outline btn-sm" onclick="addRighePreset('${id}')">+ Preset standard</button>
+      </div>
+    `;
+    container.appendChild(div);
+
+    (data.tariffe || []).forEach(r => addRiga(id, r));
+    if (!data.tariffe?.length) addRighePreset(id);
+    updatePreview();
+  }
+
+  function updateCorriereNome(id, nome) {
+    const c = corrieri.find(x => x.id === id);
+    if (c) c.nome = nome;
+  }
+
+  function removeCorriere(id) {
+    corrieri = corrieri.filter(x => x.id !== id);
+    document.getElementById(`block-${id}`)?.remove();
+    updatePreview();
+  }
+
+  let rigaIdx = 0;
+  function addRiga(corriereId, data = {}) {
+    const ri = rigaIdx++;
+    const tbody = document.getElementById(`tbody-${corriereId}`);
+    const c = corrieri.find(x => x.id === corriereId);
+    const rigaData = { ri, servizio: data.servizio || '', da: data.da || '', a: data.a || '', prezzo: data.prezzo || '', note: data.note || '' };
+    if (c) c.tariffe.push(rigaData);
+
+    const tr = document.createElement('tr');
+    tr.id = `riga-${ri}`;
+    tr.innerHTML = `
+      <td><input type="text" value="${rigaData.servizio}" placeholder="es. Express Europa" oninput="updateRiga('${corriereId}',${ri},'servizio',this.value)"></td>
+      <td><input type="number" value="${rigaData.da}" placeholder="0" style="width:70px" oninput="updateRiga('${corriereId}',${ri},'da',this.value)"></td>
+      <td><input type="number" value="${rigaData.a}" placeholder="30" style="width:70px" oninput="updateRiga('${corriereId}',${ri},'a',this.value)"></td>
+      <td><input type="number" value="${rigaData.prezzo}" placeholder="0.00" step="0.01" oninput="updateRiga('${corriereId}',${ri},'prezzo',this.value)"></td>
+      <td><input type="text" value="${rigaData.note}" placeholder="opzionale" oninput="updateRiga('${corriereId}',${ri},'note',this.value)"></td>
+      <td><button class="btn-del-row" onclick="removeRiga('${corriereId}',${ri})">✕</button></td>
+    `;
+    tbody.appendChild(tr);
+  }
+
+  function addRighePreset(id) {
+    const preset = [
+      { servizio: 'Express Europa', da: '0', a: '5', prezzo: '12.50', note: '' },
+      { servizio: 'Express Europa', da: '5', a: '10', prezzo: '18.00', note: '' },
+      { servizio: 'Express Europa', da: '10', a: '20', prezzo: '25.00', note: '' },
+      { servizio: 'Economy', da: '0', a: '10', prezzo: '8.50', note: '3-5 gg' },
+      { servizio: 'Economy', da: '10', a: '30', prezzo: '14.00', note: '3-5 gg' },
+    ];
+    preset.forEach(r => addRiga(id, r));
+  }
+
+  function updateRiga(corriereId, ri, field, value) {
+    const c = corrieri.find(x => x.id === corriereId);
+    if (!c) return;
+    const r = c.tariffe.find(x => x.ri === ri);
+    if (r) r[field] = value;
+  }
+
+  function removeRiga(corriereId, ri) {
+    const c = corrieri.find(x => x.id === corriereId);
+    if (c) c.tariffe = c.tariffe.filter(x => x.ri !== ri);
+    document.getElementById(`riga-${ri}`)?.remove();
+  }
+
+  function buildPayload() {
+    const cliente = document.getElementById('cliente').value.trim();
+    if (!cliente) { toast('Inserisci il nome del cliente', true); return null; }
+    const dataDoc = document.getElementById('data-doc').value;
+    const payload = {
+      cliente,
+      data: dataDoc ? new Date(dataDoc).toLocaleDateString('it-IT') : new Date().toLocaleDateString('it-IT'),
+      corrieri: corrieri.map(c => ({
+        nome: c.nome || 'Corriere',
+        tariffe: c.tariffe.filter(r => r.servizio || r.prezzo).map(r => ({
+          'Servizio': r.servizio,
+          'Da (kg)': r.da,
+          'A (kg)': r.a,
+          'Prezzo €': r.prezzo,
+          'Note': r.note,
+        })),
+      })),
+    };
+    return payload;
+  }
+
+  async function generaPDF() {
+    const payload = buildPayload();
+    if (!payload) return;
+    try {
+      const res = await fetch('/api/shipping/pdf', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      if (!res.ok) throw new Error('Errore generazione PDF');
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `tissquad-shipping-${payload.cliente.replace(/\s+/g,'-')}.pdf`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch(e) { toast(e.message, true); }
+  }
+
+  async function anteprimaPDF() {
+    const payload = buildPayload();
+    if (!payload) return;
+    try {
+      const res = await fetch('/api/shipping/pdf', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      if (!res.ok) throw new Error('Errore generazione PDF');
+      const blob = await res.blob();
+      window.open(URL.createObjectURL(blob), '_blank');
+    } catch(e) { toast(e.message, true); }
+  }
+
+  function toast(msg, error = false) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.className = 'show' + (error ? ' error' : '');
+    setTimeout(() => el.className = '', 3000);
+  }
+
+  // Aggiungi un corriere di default
+  addCorriere({ nome: 'DHL' });
+</script>
+</body>
+</html>
