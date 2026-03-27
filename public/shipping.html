@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tissquad – Shipping Rates Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -113,28 +115,53 @@
 
     /* PREVIEW COVER */
     .cover-preview {
-      background: var(--navy);
+      background: #0c1220;
+      background-image: url('/images/port-bg.jpg');
+      background-size: cover;
+      background-position: center;
       border-radius: 12px;
       padding: 40px 40px 30px;
       position: relative;
       overflow: hidden;
-      min-height: 220px;
+      min-height: 260px;
     }
-    .cover-preview .stripe { position: absolute; background: var(--gold); opacity: .5; transform: rotate(-35deg); }
-    .cover-preview .vbar { position: absolute; left: 32px; top: 30px; width: 5px; height: 130px; background: var(--gold); border-radius: 2px; }
-    .cover-preview .title { font-size: 32px; font-weight: 900; color: #fff; line-height: 1.15; margin-left: 22px; }
-    .cover-preview .subtitle { font-size: 15px; color: var(--gold); margin-left: 22px; margin-top: 10px; }
-    .cover-preview .badges { display: flex; gap: 12px; margin-top: 24px; margin-left: 22px; flex-wrap: wrap; }
+    .cover-preview::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(12,18,32,0.92) 45%, rgba(12,18,32,0.55) 100%);
+      border-radius: 12px;
+    }
+    .cover-preview > * { position: relative; z-index: 1; }
+
+    /* Strisce oro */
+    .cover-preview .stripes {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 0;
+      overflow: hidden;
+    }
+    .cover-preview .stripes span {
+      position: absolute;
+      background: #c9a227;
+      opacity: 0.55;
+      width: 8px;
+      height: 200%;
+      transform-origin: center center;
+    }
+    .cover-preview .vbar { position: absolute; left: 30px; top: 28px; width: 6px; height: 140px; background: var(--gold); border-radius: 2px; z-index: 1; }
+    .cover-preview .title { font-family: 'Anton', 'Impact', sans-serif; font-size: 42px; color: #fff; line-height: 1.1; margin-left: 22px; letter-spacing: 1px; text-shadow: 0 2px 12px rgba(0,0,0,.5); }
+    .cover-preview .subtitle { font-size: 17px; color: var(--gold); margin-left: 22px; margin-top: 12px; font-weight: 400; }
+    .cover-preview .badges { display: flex; gap: 12px; margin-top: 28px; margin-left: 22px; flex-wrap: wrap; }
     .cover-preview .badge {
-      background: rgba(13,21,38,.85);
-      border: 1.5px solid var(--gold);
+      background: rgba(12,18,32,0.88);
+      border: 1.8px solid var(--gold);
       color: #fff;
       font-size: 12px;
       font-weight: 700;
-      padding: 9px 20px;
-      border-radius: 3px;
+      padding: 10px 22px;
+      border-radius: 2px;
       text-transform: uppercase;
-      letter-spacing: .5px;
+      letter-spacing: .8px;
     }
 
     /* TOAST */
@@ -174,9 +201,12 @@
   <div class="card">
     <h2>Anteprima copertina</h2>
     <div class="cover-preview" id="cover-preview">
-      <div class="stripe" style="width:6px;height:300px;top:-80px;left:10px"></div>
-      <div class="stripe" style="width:6px;height:300px;top:-80px;left:30px;opacity:.3"></div>
-      <div class="stripe" style="width:6px;height:300px;top:-80px;right:80px"></div>
+      <div class="stripes">
+        <span style="left:2%;top:-20%;transform:rotate(-35deg)"></span>
+        <span style="left:5%;top:-20%;transform:rotate(-35deg);opacity:.3;width:4px"></span>
+        <span style="right:10%;top:-20%;transform:rotate(-35deg)"></span>
+        <span style="right:7%;top:-20%;transform:rotate(-35deg);opacity:.3;width:4px"></span>
+      </div>
       <div class="vbar"></div>
       <div class="title">TISSQUAD<br>SHIPPING RATES 2025</div>
       <div class="subtitle" id="preview-subtitle">Tariffe esclusive per —</div>
