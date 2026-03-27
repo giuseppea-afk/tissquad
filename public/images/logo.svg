@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Tissquad bird logo - swift/swallow in flight -->
+  <!-- Upper wings crossing (V shape) -->
+  <path fill="currentColor" d="
+    M 6,40
+    L 40,57
+    L 80,7
+    L 71,7
+    L 44,41
+    L 20,7
+    L 11,7
+    Z
+  "/>
+  <!-- Body with head curl and beak -->
+  <path fill="currentColor" d="
+    M 40,58
+    C 34,63 22,70 14,76
+    C 8,80 7,88 14,85
+    C 22,81 36,74 48,67
+    L 88,57
+    L 82,65
+    C 74,72 62,72 50,65
+    C 44,62 41,60 40,58
+    Z
+  "/>
+  <!-- Tail feather dots near beak -->
+  <circle cx="82" cy="68" r="2.5"/>
+  <circle cx="86" cy="73" r="2"/>
+  <circle cx="78" cy="73" r="2"/>
+</svg>

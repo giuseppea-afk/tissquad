@@ -134,19 +134,18 @@
     }
     .cover-preview > * { position: relative; z-index: 1; }
 
-    /* Strisce oro */
-    .cover-preview .stripes {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      pointer-events: none; z-index: 0;
-      overflow: hidden;
+    /* Strisce oro - rimosse, ora c'è il logo */
+    .cover-preview .logo-bg {
+      position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+      width: 220px; height: 220px; opacity: 0.15; z-index: 0;
     }
-    .cover-preview .stripes span {
-      position: absolute;
-      background: #c9a227;
-      opacity: 0.55;
-      width: 8px;
-      height: 200%;
-      transform-origin: center center;
+    .cover-preview .logo-bg-left {
+      position: absolute; left: -60px; top: 50%; transform: translateY(-40%);
+      width: 320px; height: 320px; opacity: 0.12; z-index: 0;
+    }
+    .cover-preview .logo-top-right {
+      position: absolute; right: 18px; top: 14px;
+      width: 72px; height: 72px; opacity: 0.85; z-index: 2;
     }
     .cover-preview .vbar { position: absolute; left: 30px; top: 28px; width: 6px; height: 140px; background: var(--gold); border-radius: 2px; z-index: 1; }
     .cover-preview .title { font-family: 'Anton', 'Impact', sans-serif; font-size: 42px; color: #fff; line-height: 1.1; margin-left: 22px; letter-spacing: 1px; text-shadow: 0 2px 12px rgba(0,0,0,.5); }
@@ -201,12 +200,12 @@
   <div class="card">
     <h2>Anteprima copertina</h2>
     <div class="cover-preview" id="cover-preview">
-      <div class="stripes">
-        <span style="left:2%;top:-20%;transform:rotate(-35deg)"></span>
-        <span style="left:5%;top:-20%;transform:rotate(-35deg);opacity:.3;width:4px"></span>
-        <span style="right:10%;top:-20%;transform:rotate(-35deg)"></span>
-        <span style="right:7%;top:-20%;transform:rotate(-35deg);opacity:.3;width:4px"></span>
-      </div>
+      <!-- Logo grande sfondo sx -->
+      <img src="/images/logo.svg" class="logo-bg-left" style="color:#c9a227;filter:invert(74%) sepia(55%) saturate(500%) hue-rotate(5deg) brightness(95%)">
+      <!-- Logo grande sfondo dx -->
+      <img src="/images/logo.svg" class="logo-bg" style="filter:invert(74%) sepia(55%) saturate(500%) hue-rotate(5deg) brightness(95%)">
+      <!-- Logo piccolo in alto a destra -->
+      <img src="/images/logo.svg" class="logo-top-right" style="filter:invert(74%) sepia(55%) saturate(500%) hue-rotate(5deg) brightness(95%)">
       <div class="vbar"></div>
       <div class="title">TISSQUAD<br>SHIPPING RATES 2025</div>
       <div class="subtitle" id="preview-subtitle">Tariffe esclusive per —</div>
