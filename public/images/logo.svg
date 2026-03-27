@@ -1,45 +1,34 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
-  <!-- Ala sinistra (grande triangolo che va da sinistra in alto verso il centro) -->
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Ala destra (alto-destra) — disegnata per prima, sotto -->
+  <path fill="currentColor" d="M 258,210 L 460,44 C 450,60 428,88 400,116 L 300,232 Z"/>
+
+  <!-- Corpo a C — crescent che forma il corpo dell'uccello col becco ricurvo a destra -->
   <path fill="currentColor" d="
-    M 15,140
-    L 170,15
-    L 215,15
-    L 275,200
-    L 200,145
-    L 65,95
+    M 192,262
+    C 148,250 94,268 62,308
+    C 35,346 38,394 70,424
+    C 98,452 142,456 182,438
+    C 218,422 234,384 226,350
+    C 220,324 204,306 216,288
+    C 226,274 246,270 262,276
+    C 304,294 348,328 378,360
+    C 395,378 402,398 392,412
+    C 384,424 368,424 358,414
+    C 348,405 348,390 358,382
+    L 414,302
+    C 424,286 423,265 412,254
+    C 402,243 387,246 380,258
+    C 358,278 315,282 275,268
+    C 255,261 230,258 210,264
     Z
   "/>
 
-  <!-- Ala destra (lama sottile che va verso l'alto destra) -->
-  <path fill="currentColor" d="
-    M 268,192
-    L 440,15
-    L 480,45
-    L 318,238
-    Z
-  "/>
-
-  <!-- Corpo / loop testa (curva che scende a sinistra e forma l'anello della testa) -->
-  <path fill="currentColor" d="
-    M 270,215
-    C 255,265 220,315 170,360
-    C 130,395 65,400 38,355
-    C 15,315 35,268 80,255
-    C 120,243 170,235 220,218
-    Z
-  "/>
-
-  <!-- Becco (punta verso destra) -->
-  <path fill="currentColor" d="
-    M 282,220
-    L 465,210
-    C 490,240 475,285 445,292
-    L 295,268
-    Z
-  "/>
+  <!-- Ala sinistra (alto-sinistra) — disegnata sopra, incrocia la destra -->
+  <path fill="currentColor" d="M 178,266 C 132,228 78,164 40,74 C 66,67 104,71 140,90 L 260,207 Z"/>
 
   <!-- Tre puntini vicino al becco -->
-  <circle fill="currentColor" cx="445" cy="306" r="14"/>
-  <circle fill="currentColor" cx="468" cy="332" r="11"/>
-  <circle fill="currentColor" cx="420" cy="334" r="11"/>
+  <circle fill="currentColor" cx="298" cy="350" r="12"/>
+  <circle fill="currentColor" cx="318" cy="371" r="10"/>
+  <circle fill="currentColor" cx="280" cy="371" r="10"/>
 </svg>

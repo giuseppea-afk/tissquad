@@ -8,26 +8,29 @@ const BG_IMAGE  = path.join(__dirname, '../public/images/port-bg.jpg');
 const FONT_BOLD = path.join(__dirname, '../public/fonts/Anton-Regular.ttf');
 
 // Disegna il logo uccello Tissquad - coordinate calcolate direttamente (no translate)
-// ox,oy = angolo in alto a sinistra del bounding box, size = larghezza
+// Basato sul SVG logo ufficiale (viewBox 0 0 500 500)
+// ox,oy = angolo in alto a sinistra del bounding box, size = larghezza in punti PDF
 function drawBirdLogo(doc, ox, oy, size, color, opacity) {
-  const s = size / 100;
-  // converte coordinate normalizzate (0-100) in coordinate PDF assolute
+  const s = size / 500; // scala da viewBox 500 a dimensione desiderata
   const p = (x, y) => `${+(ox + x*s).toFixed(2)},${+(oy + y*s).toFixed(2)}`;
   const n = (x, y) => [+(ox + x*s).toFixed(2), +(oy + y*s).toFixed(2)];
 
   doc.save();
   doc.opacity(opacity || 0.22);
 
-  // Ali superiori (forma a V)
-  doc.path(`M ${p(6,40)} L ${p(40,57)} L ${p(80,7)} L ${p(71,7)} L ${p(44,41)} L ${p(20,7)} L ${p(11,7)} Z`).fill(color);
+  // Ala destra (alto-destra) — disegnata per prima, sotto
+  doc.path(`M ${p(258,210)} L ${p(460,44)} C ${p(450,60)} ${p(428,88)} ${p(400,116)} L ${p(300,232)} Z`).fill(color);
 
-  // Corpo con becco
-  doc.path(`M ${p(40,58)} C ${p(34,63)} ${p(22,70)} ${p(14,76)} C ${p(8,80)} ${p(7,88)} ${p(14,85)} C ${p(22,81)} ${p(36,74)} ${p(48,67)} L ${p(88,57)} L ${p(82,65)} C ${p(74,72)} ${p(62,72)} ${p(50,65)} C ${p(44,62)} ${p(41,60)} ${p(40,58)} Z`).fill(color);
+  // Corpo a C — crescent con becco ricurvo a destra
+  doc.path(`M ${p(192,262)} C ${p(148,250)} ${p(94,268)} ${p(62,308)} C ${p(35,346)} ${p(38,394)} ${p(70,424)} C ${p(98,452)} ${p(142,456)} ${p(182,438)} C ${p(218,422)} ${p(234,384)} ${p(226,350)} C ${p(220,324)} ${p(204,306)} ${p(216,288)} C ${p(226,274)} ${p(246,270)} ${p(262,276)} C ${p(304,294)} ${p(348,328)} ${p(378,360)} C ${p(395,378)} ${p(402,398)} ${p(392,412)} C ${p(384,424)} ${p(368,424)} ${p(358,414)} C ${p(348,405)} ${p(348,390)} ${p(358,382)} L ${p(414,302)} C ${p(424,286)} ${p(423,265)} ${p(412,254)} C ${p(402,243)} ${p(387,246)} ${p(380,258)} C ${p(358,278)} ${p(315,282)} ${p(275,268)} C ${p(255,261)} ${p(230,258)} ${p(210,264)} Z`).fill(color);
 
-  // Puntini coda
-  const [cx1, cy1] = n(82, 68); doc.circle(cx1, cy1, +(2.5*s).toFixed(2)).fill(color);
-  const [cx2, cy2] = n(86, 73); doc.circle(cx2, cy2, +(2*s).toFixed(2)).fill(color);
-  const [cx3, cy3] = n(78, 73); doc.circle(cx3, cy3, +(2*s).toFixed(2)).fill(color);
+  // Ala sinistra (alto-sinistra) — incrocia la destra
+  doc.path(`M ${p(178,266)} C ${p(132,228)} ${p(78,164)} ${p(40,74)} C ${p(66,67)} ${p(104,71)} ${p(140,90)} L ${p(260,207)} Z`).fill(color);
+
+  // Tre puntini vicino al becco
+  const [cx1, cy1] = n(298, 350); doc.circle(cx1, cy1, +(12*s).toFixed(2)).fill(color);
+  const [cx2, cy2] = n(318, 371); doc.circle(cx2, cy2, +(10*s).toFixed(2)).fill(color);
+  const [cx3, cy3] = n(280, 371); doc.circle(cx3, cy3, +(10*s).toFixed(2)).fill(color);
 
   doc.restore();
 }
