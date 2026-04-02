@@ -163,6 +163,20 @@
       letter-spacing: .8px;
     }
 
+    /* CANVA STATUS */
+    .canva-status { display:none; margin-top:14px; padding:14px 16px; border-radius:10px; border:1.5px solid var(--border); font-size:13px; }
+    .canva-status.running { border-color:#4a90e2; background:#f0f6ff; }
+    .canva-status.done    { border-color:#34a853; background:#f0faf3; }
+    .canva-status.error   { border-color:#ea4335; background:#fff3f2; }
+    .canva-status .cs-title { font-weight:700; margin-bottom:6px; }
+    .canva-status.running .cs-title { color:#2472c8; }
+    .canva-status.done    .cs-title { color:#1e8a3e; }
+    .canva-status.error   .cs-title { color:#ea4335; }
+    .canva-status .cs-log { font-size:11px; color:var(--muted); max-height:90px; overflow-y:auto; margin-top:6px; white-space:pre-wrap; }
+    .btn-canva { background:#7c3aed; color:#fff; }
+    .btn-canva:hover { background:#6224cc; }
+    .btn-canva:disabled { opacity:.55; cursor:not-allowed; }
+
     /* TOAST */
     #toast { position: fixed; bottom: 24px; right: 24px; background: #1e2a3a; color: #fff; padding: 12px 20px; border-radius: 10px; font-size: 14px; display: none; z-index: 999; }
     #toast.show { display: block; animation: fadeIn .2s; }
@@ -230,6 +244,11 @@
     <div class="actions">
       <button class="btn btn-gold" onclick="generaPDF()">⬇ Scarica PDF</button>
       <button class="btn btn-navy" onclick="anteprimaPDF()">👁 Anteprima nel browser</button>
+      <button class="btn btn-canva" id="btn-canva" onclick="creaCanva()">🎨 Crea su Canva</button>
+    </div>
+    <div class="canva-status" id="canva-status">
+      <div class="cs-title" id="canva-status-title"></div>
+      <div class="cs-log" id="canva-status-log"></div>
     </div>
   </div>
 
@@ -395,6 +414,75 @@
       const blob = await res.blob();
       window.open(URL.createObjectURL(blob), '_blank');
     } catch(e) { toast(e.message, true); }
+  }
+
+  // ── Canva agent ────────────────────────────────────────────────────────
+  async function creaCanva() {
+    const cliente = document.getElementById('cliente').value.trim();
+    if (!cliente) { toast('Inserisci il nome del cliente', true); return; }
+
+    const btn = document.getElementById('btn-canva');
+    const statusEl = document.getElementById('canva-status');
+    const titleEl  = document.getElementById('canva-status-title');
+    const logEl    = document.getElementById('canva-status-log');
+
+    // Verifica sessione Canva
+    try {
+      const chk = await fetch('/api/canva/session');
+      const { ok } = await chk.json();
+      if (!ok) {
+        toast('Sessione Canva non trovata — esegui: npm run canva:login', true);
+        return;
+      }
+    } catch { toast('Server non raggiungibile', true); return; }
+
+    btn.disabled = true;
+    statusEl.className = 'canva-status running';
+    statusEl.style.display = 'block';
+    titleEl.textContent = '⏳ Agente Canva in esecuzione…';
+    logEl.textContent = '';
+
+    let jobId;
+    try {
+      const res = await fetch('/api/canva/run', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cliente }),
+      });
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || 'Errore avvio agente');
+      }
+      jobId = (await res.json()).jobId;
+    } catch (e) {
+      statusEl.className = 'canva-status error';
+      titleEl.textContent = '❌ ' + e.message;
+      btn.disabled = false;
+      return;
+    }
+
+    // Poll fino a completamento
+    const poll = setInterval(async () => {
+      try {
+        const r = await fetch(`/api/canva/status/${jobId}`);
+        const job = await r.json();
+        logEl.textContent = (job.log || []).join('\n');
+        logEl.scrollTop = logEl.scrollHeight;
+
+        if (job.status === 'done') {
+          clearInterval(poll);
+          statusEl.className = 'canva-status done';
+          titleEl.textContent = '✅ Template duplicato su Canva!';
+          btn.disabled = false;
+          toast('Template Canva creato con successo!');
+        } else if (job.status === 'error') {
+          clearInterval(poll);
+          statusEl.className = 'canva-status error';
+          titleEl.textContent = '❌ Agente terminato con errore';
+          btn.disabled = false;
+        }
+      } catch { clearInterval(poll); btn.disabled = false; }
+    }, 2000);
   }
 
   function toast(msg, error = false) {

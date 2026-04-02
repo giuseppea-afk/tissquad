@@ -9,6 +9,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/clienti', require('./routes/clienti'));
 app.use('/api/prodotti', require('./routes/prodotti'));
 app.use('/api/shipping', require('./routes/shipping'));
+app.use('/api/canva',   require('./routes/canva'));
 app.use('/api/preventivi', require('./routes/preventivi'));
 app.use('/api/impostazioni', require('./routes/impostazioni'));
 
